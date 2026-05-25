@@ -3,24 +3,25 @@
 #include <stdexcept>
 using namespace ISXAnyType;
 
+//Shows variable types based on enumerator value
 void GetTypeName(AnyType& value)
 {
 	int type = value.get_contained_type();
 	switch(type)
 	{
-		case 0:
+		case BooleanType:
             std::cout << "Variable type: Boolean" << std::endl;
             break;
-        case 1:
+        case IntType:
             std::cout << "Variable type: Int" << std::endl;
             break;
-        case 2:
+        case DoubleType:
             std::cout << "Variable type: Double" << std::endl;
             break;
-        case 3:
+        case CharType:
             std::cout << "Variable type: Char" << std::endl;
             break;
-        case 4:
+        case NoneType:
             std::cout << "No type" << std::endl;
             break;
         default:
@@ -31,39 +32,54 @@ int main()
 {
     try
     {
-    	AnyType a;
+    	AnyType variable_one;
     	std::cout <<"None----------------------------"<<std::endl;
-    	GetTypeName(a);
-    	a.PrintValue();
+    	GetTypeName(variable_one);
+    	variable_one.PrintValue();
     	std::cout <<"Int/1----------------------------"<<std::endl;
-    	a = 1;
-    	GetTypeName(a);
-    	a.PrintValue();
+    	variable_one = 1;
+    	GetTypeName(variable_one);
+    	variable_one.PrintValue();
     	std::cout <<"Double/1.5----------------------------"<<std::endl;
-    	a = 1.5;
-    	GetTypeName(a);
-    	a.PrintValue();
+    	variable_one = 1.5;
+    	GetTypeName(variable_one);
+    	variable_one.PrintValue();
     	std::cout <<"Char/a----------------------------"<<std::endl;
-    	a = 'a';
-    	GetTypeName(a);
-    	a.PrintValue();
+    	variable_one = 'a';
+    	GetTypeName(variable_one);
+    	variable_one.PrintValue();
     	std::cout <<"Bool/false(0)----------------------------"<<std::endl;
-    	a = false;
-    	GetTypeName(a);
-    	a.PrintValue();
+    	variable_one = false;
+    	GetTypeName(variable_one);
+    	variable_one.PrintValue();
     	std::cout <<"Int/10----------------------------"<<std::endl;
-    	AnyType b = 10;
-    	GetTypeName(b);
-    	b.PrintValue();
-    	a.SwapTwoObjects(b);
+    	AnyType variable_two = 10;
+    	GetTypeName(variable_two);
+    	variable_two.PrintValue();
+    	variable_one.SwapTwoObjects(variable_two);
     	std::cout <<"Int/10----------------------------"<<std::endl;
-    	GetTypeName(a);
-    	a.PrintValue();
+    	GetTypeName(variable_one);
+    	variable_one.PrintValue();
     	std::cout <<"Bool/false(0)----------------------------"<<std::endl;
-    	GetTypeName(b);
-    	b.PrintValue();
-
+    	GetTypeName(variable_two);
+    	variable_two.PrintValue();
+    	std::cout <<"Test for To methods----------------------------"<<std::endl;
+		std::cout <<"ToInt " << variable_one.ToInt() << std::endl;
+    	std::cout <<"ToBool " << variable_two.ToBool() << std::endl;
     }
-	catch (...)    {}
+	catch (const std::exception& e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+	try
+	{
+		AnyType variable = 10;
+		int StoredValueInt = variable.ToInt();
+		int StoredValueDouble = variable.ToDouble();
+	}
+	catch (const std::exception& e)
+	{
+		std::cout << e.what() << std::endl;
+	}
 	return 0;
 }
