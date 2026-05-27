@@ -1,0 +1,5 @@
+add_executable(FileReadingTests FileReadingTests.cpp)
+target_link_libraries(FileReadingTests gtest_main)
+
+include(GoogleTest)
+gtest_discover_tests(FileReadingTests)

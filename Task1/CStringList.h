@@ -51,10 +51,13 @@ namespace ISXCStringList {
             return;
         }
         int size = GetSize(*list);
-        *list = (char**)realloc(*list, (size + 2) * sizeof(char*));
-        const int text_length = strlen(text);
-        (*list)[size] = (char*)malloc((text_length + 1) * sizeof(char));
-        strcpy((*list)[size], text);
+        char** temp = (char**)realloc(*list, (size + 2) * sizeof(char*));
+        if (temp == NULL)
+        {
+            return;
+        }
+        *list = temp;
+        (*list)[size] = _strdup(text);
         (*list)[size + 1] = NULL;
     }
     //Removes string from index
@@ -74,7 +77,12 @@ namespace ISXCStringList {
         {
             (*list)[i] = (*list)[i + 1];
         }
-        *list = (char**)realloc(*list, size * sizeof(char*));
+        char** temp = (char**)realloc(*list, (size + 2) * sizeof(char*));
+        if (temp == NULL)
+        {
+            return;
+        }
+        *list = temp;
     }
     //Finds string with identical text and return index
     int FindString(IN char** list, IN const char* text)
@@ -172,7 +180,12 @@ namespace ISXCStringList {
             }
         }
         (*list)[write_index] = NULL;
-        *list = (char**)realloc(*list, (write_index + 1) * sizeof(char*));
+        char** temp = (char**)realloc(*list, (size + 2) * sizeof(char*));
+        if (temp == NULL)
+        {
+            return;
+        }
+        *list = temp;
     }
     //Replaces previous text in item by index with yours text
     void ReplaceTextInItem(INOUT char*** list, IN const int index, IN const char* text)

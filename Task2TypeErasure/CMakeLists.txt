@@ -1,0 +1,4 @@
+add_executable(AnyTypeErasureTests AnyTypeErasureTests.cpp)
+target_link_libraries(AnyTypeErasureTests gtest_main)
+include(GoogleTest)
+gtest_discover_tests(AnyTypeErasureTests)
